@@ -1,25 +1,21 @@
 #include <cassert>
 #include <iostream>
 #include <string>
-#include <sstream>
 
 using namespace std;
 
-string char2string(char s)
+string revertRec(string s, int pos)
 {
-	string ss;
-	ss.assign(&s);
-	return ss;
-}
-
-string aux(string s, int pos)
-{
-	string letra = "" + s[pos];
-	cout << pos << " | " << letra << endl;
+	// criamos uma nova string, com o "char" exitente na posição "pos"
+	string letra(1, s[pos]);
+	// quando pos chegar no valor 0, estamos no primeiro caractere
+	// então retorne ele
 	if(pos == 0){
 		return letra;
 	}else{
-		return letra + aux(s,pos-1);
+		// caso contrário, retorne a concatenação do caractere em "pos"
+		// com o caractere em "pos -1"
+		return letra + revertRec(s, pos -1);
 	};
 }
 
@@ -35,15 +31,22 @@ string revert(string s)
 	// umaString = "a"
 	// outraString = "b";
 	// str = umaString + "X" + outraString;
+
+	// inicio da resposta
+	// o salvamos o tamanho da string para que ela seja percorrida
 	int size = s.size();
-	if(size == 0){
+	// se a string tiver menos de dois caracteres, não há reversa, então retorne a string
+	if(size < 2){
 		return s;
 	};
-	return aux(s,size-1);
+	// para calcular a string reversa percorremos os indices em ordem decrescente
+	// iniciando no indice "size-1" o ultimo
+	return revertRec(s,size-1);
 }
 
 int main(void)
 {
+	// a função main foi fornecida pelo professor, para as verificações
 	assert( "" == revert("") );
 	assert( "A" == revert("A") );
 	assert( "AB" == revert("BA") );

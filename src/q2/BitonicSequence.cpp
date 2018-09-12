@@ -9,6 +9,21 @@ int findBase(vector<int> v, int left, int right)
 	int m = (left+right)/2;
 
 	int mid = v.at(m);
+	// como exite a possibilidade da entrada estar vazia no lado crescente ou decrescente
+	// temos de verificar se m é o indice do primeiro ou do ultimo elemento
+	// nesses dois casos o indice calculado para o elemento posterior ou anterior
+	// podem estar fora do vetor
+	// caso "m" seja 0 significa que não há lista de elementos decrescente e o algoritmo
+	// convergiu para o primeiro elemento. Caso "m" seja "size-1" significa que o algoritmo
+	// convergiu para o ultimo elemento, e não há lista de elementos do lado crescente
+	// OBS: aqui também foi provida uma conversão explícita de m para o tipo unsigned int
+	if((m == 0) || ((unsigned)m == v.size() -1))
+	{
+		// nesse caso retornaremos mid, pois trata-se do menor elemento do vetor
+		// não importa se o grupo que está faltando seja o de elementos crescentes ou decrescentes
+		return m;
+	};
+
 	int midPrev = v.at(m-1);
 	int midNext = v.at(m+1);
 
